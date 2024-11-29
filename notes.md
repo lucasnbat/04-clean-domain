@@ -65,3 +65,11 @@
     vai precisar de regras de validação, etc;
   - Para lidar com isso...cria um objeto Slug (classe) e usa como tipo no atri-
     buto slug;
+
+## Classe base de entidades
+
+- Coloca na pasta `core/entities/` a base de entidades da aplicação...isso porque
+  vemos padrões nas entidades. Todas tem um id, todas tem um construtor... então
+  vamos colocar o que é comum num arquivo `entity.ts` e fazer as classes extende-
+  rem a classe dentro dele.
+- A pasta `core/` serve para colocar tudo que pode ser compartilhado na aplicação;
