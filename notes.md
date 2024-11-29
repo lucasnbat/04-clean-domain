@@ -56,3 +56,12 @@
 - Veja só:
   - O Use Case está no nível maior
   - Ele usa os métodos dos repositórios que tem lógica de negócio internas
+
+## Value Object de slug
+
+- Aparentemente Value Object é toda propriedade que por si só pode ter várias 
+  regras de negócio envolvidas com ela.
+  - Ex: slug. Ele pode ser gerado automaticamente, ou gerado a partir do usuário,
+    vai precisar de regras de validação, etc;
+  - Para lidar com isso...cria um objeto Slug (classe) e usa como tipo no atri-
+    buto slug;
