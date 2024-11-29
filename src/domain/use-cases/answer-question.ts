@@ -1,4 +1,5 @@
 import { Answer } from "../entities/answer"
+import { AnswerRepository } from "../repositories/answers-repository"
 
 interface AnswerQuestionUseCaseRequest {
   instructorId: string
@@ -7,12 +8,22 @@ interface AnswerQuestionUseCaseRequest {
 }
 
 export class AnswerQuestionUseCase {
-  execute({ instructorId, questionId, content }: AnswerQuestionUseCaseRequest) {
+  constructor(
+    // isso abaixo que vai efetivamente gravar a resposta no banco com uma 
+    // lógica de negócio própria dentro dele
+    private answersRepository: AnswerRepository
+  ) { }
+
+  async execute({ instructorId, questionId, content }: AnswerQuestionUseCaseRequest) {
     const answer = new Answer({
       content,
       authorId: instructorId,
       questionId
     }) // vai gerar uma nova answer
+
+    // mesmo que não tenha o create() implementado ainda passo a answer e ele a-
+    // ceita porque a assinatura dele em repositories/answers-repository permite
+    await this.answersRepository.create(answer)
 
     return answer
   }

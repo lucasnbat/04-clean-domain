@@ -53,3 +53,6 @@
 
 - Pelo que entendi a forma principal de comunicação com dep. externas são os
   repositórios;
+- Veja só:
+  - O Use Case está no nível maior
+  - Ele usa os métodos dos repositórios que tem lógica de negócio internas
