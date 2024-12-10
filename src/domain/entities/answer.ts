@@ -1,9 +1,12 @@
 import { Entity } from "../../core/entities/entity"
+import { UniqueEntityID } from "../../core/entities/unique-entity-id"
 
 interface AnswerProps {
   content: string
-  authorId: string
-  questionId: string
+  authorId: UniqueEntityID
+  questionId: UniqueEntityID
+  createdAt: Date
+  updatedAt?: Date // para inserir flag de "editada" na resposta
 }
 
 // passando a interface AnswerProps como generic, estou dizendo que a classe 

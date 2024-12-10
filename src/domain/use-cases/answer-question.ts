@@ -19,7 +19,7 @@ export class AnswerQuestionUseCase {
     const answer = new Answer({
       content,
       authorId: instructorId,
-      questionId
+      questionId,
     }) // vai gerar uma nova answer
 
     // mesmo que não tenha o create() implementado ainda passo a answer e ele a-

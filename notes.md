@@ -73,3 +73,15 @@
   vamos colocar o que é comum num arquivo `entity.ts` e fazer as classes extende-
   rem a classe dentro dele.
 - A pasta `core/` serve para colocar tudo que pode ser compartilhado na aplicação;
+
+## Sobre constructor `protected`
+
+- Em um ponto da aula "Abstraindo criação de entidades", o Diego fala que, ao dei-
+  xar o construtor de `Entity` como `protected`, se você está dentro da 
+  `AnswerQuestionUseCase` você não pode dar `new Answer()` por que isso seria in-
+  vocar um método protegido apenas acessível dentro de classes que HERDAM a clas-
+  se `Entity`. 
+- Como a `AnwerQUestionUseCase` não herda a `Entity`, vai dar erro ao dar 
+  `new Answer({...})`. 
+- Agora se você tenta fazer `new Answer()` dentro da própria classe `Answer`, aí
+  vai funcionar porque ela herda `Entity`;

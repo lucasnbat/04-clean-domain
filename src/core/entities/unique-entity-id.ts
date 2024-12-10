@@ -5,6 +5,8 @@
 // da aplicação, de forma que se você quiser gerar o ID
 // por meio de outra coisa que não seja o randomUUID(), 
 // você possa fazer sem problema nenhum.
+// inclusive você vai poder usar essa classe em qualquer
+// atributo das suas entities que estão na pasta entities/
 
 import { randomUUID } from "node:crypto"
 

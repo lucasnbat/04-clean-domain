@@ -16,12 +16,12 @@ export class Entity<Props> {
     return this._id
   }
 
-  constructor(props: Props, id?: string) {
+  protected constructor(props: Props, id?: UniqueEntityID) {
     this.props = props
     // instancia um UniqueEntityID passando o id recebido no construtor e
     // inserindo no atributo _id
     // caso não seja passado, a lógica interna do UniqueEntityID vai gerar
     // um id automático (hoje, por meio do randomUUID())
-    this._id = new UniqueEntityID(id)
+    this._id = id ?? new UniqueEntityID()
   }
 }
