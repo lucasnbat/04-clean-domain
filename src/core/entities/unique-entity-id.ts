@@ -1,0 +1,26 @@
+// isso aqui é um value-object, mas não está na pasta
+// note que praticamente é a mesma estrutura do value-
+// object Slug.
+// ele vai servir para separar a lógica de geração de IDs
+// da aplicação, de forma que se você quiser gerar o ID
+// por meio de outra coisa que não seja o randomUUID(), 
+// você possa fazer sem problema nenhum.
+
+import { randomUUID } from "node:crypto"
+
+export class UniqueEntityID {
+  private value: string
+
+  // dois métodos públicos que retornam o value 
+  toString() {
+    return this.value
+  }
+
+  toValue() {
+    return this.value
+  }
+
+  constructor(value?: string) {
+    this.value = value ?? randomUUID()
+  }
+}
