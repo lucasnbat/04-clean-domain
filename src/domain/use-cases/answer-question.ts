@@ -10,7 +10,8 @@ interface AnswerQuestionUseCaseRequest {
 export class AnswerQuestionUseCase {
   constructor(
     // isso abaixo que vai efetivamente gravar a resposta no banco com uma 
-    // lógica de negócio própria dentro dele
+    // lógica de negócio própria dentro dele, é uma maquinaria tipo um prisma,
+    // um TypeORM, um Sequelize...
     private answersRepository: AnswerRepository
   ) { }
 
