@@ -85,3 +85,14 @@
   `new Answer({...})`. 
 - Agora se você tenta fazer `new Answer()` dentro da própria classe `Answer`, aí
   vai funcionar porque ela herda `Entity`;
+
+## Sobre sequência de construção
+
+1. Identificação de entidades e casos de uso
+2. Mapeou relacionamentos entre classes
+3. Abordou dependências externas (repositories onde criou só a assinatura da função)
+4. Value Objects
+5. Criou a classe base `Entity` e simplificou entidades
+6. Value Object do ID
+7. Mapeamento de propriedades
+8. Abstraiu criação de entidades (método estático `create()`)
