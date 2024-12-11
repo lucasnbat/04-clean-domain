@@ -112,3 +112,24 @@
     "vitest/globals"
   ]
   ```
+
+## Eslint
+
+- `npm install eslint @rocketseat/eslint-config -D`
+- Cria arquivo `.eslintrc.json` contendo:
+  ```vim
+  {
+    "extends": [
+      "@rocketseat/eslint-config/node",
+      "plugin:vitest-globals/recommended"
+    ],
+    "env": {
+      "vitest-globals/env": true
+    }
+  }
+  ```
+- scripts no `package.json`:
+  ```vim
+  "lint": "eslint src --ext .ts",
+   "lint:fix": "eslint src --ext .ts --fix"
+  ```

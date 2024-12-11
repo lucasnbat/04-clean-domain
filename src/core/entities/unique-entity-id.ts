@@ -3,17 +3,17 @@
 // object Slug.
 // ele vai servir para separar a lógica de geração de IDs
 // da aplicação, de forma que se você quiser gerar o ID
-// por meio de outra coisa que não seja o randomUUID(), 
+// por meio de outra coisa que não seja o randomUUID(),
 // você possa fazer sem problema nenhum.
 // inclusive você vai poder usar essa classe em qualquer
 // atributo das suas entities que estão na pasta entities/
 
-import { randomUUID } from "node:crypto"
+import { randomUUID } from 'node:crypto'
 
 export class UniqueEntityID {
   private value: string
 
-  // dois métodos públicos que retornam o value 
+  // dois métodos públicos que retornam o value
   toString() {
     return this.value
   }

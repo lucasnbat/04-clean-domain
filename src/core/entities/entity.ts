@@ -1,6 +1,6 @@
-import { UniqueEntityID } from "./unique-entity-id"
+import { UniqueEntityID } from './unique-entity-id'
 
-// o generic Props foi usado no lugar dos anys para permitir que eu pudesse 
+// o generic Props foi usado no lugar dos anys para permitir que eu pudesse
 // fazer algo como get content() {this.props.content} na classe answer por ex;
 // sem o generic, com o any, ele não mostra as opções de tipo possiveis (ctrl + espaço)
 // dentro de cada classe, então, eu passo <AnswerProps> no lugar de <Props>, per-

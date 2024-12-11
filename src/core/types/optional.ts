@@ -1,4 +1,4 @@
-// isso permite você passar um tipo e depois informar qual das chaves do 
+// isso permite você passar um tipo e depois informar qual das chaves do
 // objeto de tipagem você quer que virem opcionais
 
 // O que é Optional?
@@ -18,8 +18,8 @@
 // As propriedades em K agora são opcionais.
 // As demais propriedades de T permanecem como estavam (obrigatórias).
 
-// ou seja, Pick<Partial<T>, K> está tornando todas as props do objeto opcionais e selecionando as K 
-// propriedades que você quer que sejam opcionais 
+// ou seja, Pick<Partial<T>, K> está tornando todas as props do objeto opcionais e selecionando as K
+// propriedades que você quer que sejam opcionais
 
 // Omit<T, K> pega o seu objeto inicial e retira dele as props K que você selecionou para serem
 // opcionais. O que restar em T permanece como opcional

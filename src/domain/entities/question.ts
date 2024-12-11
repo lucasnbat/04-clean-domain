@@ -1,8 +1,8 @@
-import { Slug } from "./value-objects/slug"
-import { Entity } from "@/core/entities/entity"
-import { UniqueEntityID } from "@/core/entities/unique-entity-id"
-import { Optional } from "@/core/types/optional"
-import dayjs from "dayjs"
+import { Slug } from './value-objects/slug'
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Optional } from '@/core/types/optional'
+import dayjs from 'dayjs'
 
 interface QuestionProps {
   authorId: UniqueEntityID
@@ -81,15 +81,19 @@ export class Question extends Entity<QuestionProps> {
   // esse método vai agir como o constructor de Entity: passar as props para os
   // atributos e setar um id do tipo UniqueEntityID
   // porque vamos fazer isso? para permitir preenchimento automático do createdAt()
-  // usamos o Optional para que não seja preciso passar createdAt ao criar nova question 
+  // usamos o Optional para que não seja preciso passar createdAt ao criar nova question
   static create(
     props: Optional<QuestionProps, 'createdAt' | 'slug'>,
-    id?: UniqueEntityID) {
-    const question = new Question({
-      ...props,
-      slug: props.slug ?? Slug.createFromText(props.title), // sistema gera autpmático
-      createdAt: new Date(), // sistema gera autpmático
-    }, id)
+    id?: UniqueEntityID,
+  ) {
+    const question = new Question(
+      {
+        ...props,
+        slug: props.slug ?? Slug.createFromText(props.title), // sistema gera autpmático
+        createdAt: new Date(), // sistema gera autpmático
+      },
+      id,
+    )
     return question
   }
 }
