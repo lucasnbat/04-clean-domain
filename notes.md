@@ -116,6 +116,7 @@
 ## Eslint
 
 - `npm install eslint @rocketseat/eslint-config -D`
+- `npm install eslint-plugin-vitest-globals@latest --save-dev` 
 - Cria arquivo `.eslintrc.json` contendo:
   ```vim
   {
