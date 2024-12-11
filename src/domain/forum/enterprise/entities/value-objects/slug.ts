@@ -1,8 +1,15 @@
 export class Slug {
   public value: string
 
-  constructor(value: string) {
+  private constructor(value: string) {
     this.value = value
+  }
+
+  // para criar um slug cru, tipo, se eu quiser usar num teste,
+  // eu poder passar um "example-slug" sabendo que esse vai ser
+  // o slug que vai ser retornado (get-question-by-slug.spec.ts por ex)
+  static create(slug: string) {
+    return new Slug(slug)
   }
 
   // métodos estáticos são aqueles que geralmente são funções utilitárias que po-

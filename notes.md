@@ -169,3 +169,14 @@
         - repositories
       - enterprise (onde ficam as entities)
         - entities
+
+## Lógica sequencial
+
+- Você tem repositórios fake que simulam o prisma;
+  - Eles implementam um contrato que você determina em `application/repositories`;
+  - Esses repositórios contém funções relativas a algo (findbySlug, create,
+    edit, delete...)
+- Você tem casos de uso com lógicas internas que usam os repositórios falsos
+  como dependências deles;
+  - Eles são tipados com classes de Request e Response
+  - E possuem como função principal a `execute()`
