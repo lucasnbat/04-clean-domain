@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Answer } from '../../enterprise/entities/answer'
-import { AnswerRepository } from '../../../repositories/answers-repository'
+import { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository'
 
 interface AnswerQuestionUseCaseRequest {
   instructorId: string
@@ -13,7 +13,7 @@ export class AnswerQuestionUseCase {
     // isso abaixo que vai efetivamente gravar a resposta no banco com uma
     // lógica de negócio própria dentro dele, é uma maquinaria tipo um prisma,
     // um TypeORM, um Sequelize...
-    private answersRepository: AnswerRepository,
+    private answersRepository: AnswersRepository,
   ) {}
 
   async execute({

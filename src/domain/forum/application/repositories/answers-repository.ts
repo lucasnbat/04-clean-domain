@@ -1,6 +1,6 @@
-import { Answer } from '../forum/enterprise/entities/answer'
+import { Answer } from '../../enterprise/entities/answer'
 
-export interface AnswerRepository {
+export interface AnswersRepository {
   // recebe o objeto answer para gravar no banco
   create(answer: Answer): Promise<void>
 }
