@@ -1,4 +1,4 @@
-import { Answer } from '../entities/answer'
+import { Answer } from '../forum/enterprise/entities/answer'
 
 export interface AnswerRepository {
   // recebe o objeto answer para gravar no banco

@@ -155,3 +155,17 @@
     - As camadas internas NÃO podem importar coisas das camadas mais externas (
       ex: uma Entidade/classe não pode importar coisas de um use case, mas o con-
       trário pode acontecer)
+  - Vermelha - use cases/ application
+  - Amarela - entities/ enterprise
+
+## Refatorando pastas
+
+- Podem haver subdomínios, setores do problema que está em foco;
+- A organização fica:
+  - domain
+    - forum (subdominio)
+      - application (onde estão use cases e repositories)
+        - use cases
+        - repositories
+      - enterprise (onde ficam as entities)
+        - entities
