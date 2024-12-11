@@ -96,3 +96,19 @@
 6. Value Object do ID
 7. Mapeamento de propriedades
 8. Abstraiu criação de entidades (método estático `create()`)
+
+## Usando vitest de forma global sem precisar importar funções
+
+- Você instala `npm install vitest-tsconfig-paths -D`
+- Depois cria o `vite.config.ts` referenciando:
+  ```vim
+  test: {
+    globals: true,
+  }
+  ```
+- Depois vai no `tsconfig.json` e:
+  ```vim
+  "types": [
+    "vitest/globals"
+  ]
+  ```
