@@ -134,3 +134,24 @@
   "lint": "eslint src --ext .ts",
    "lint:fix": "eslint src --ext .ts --fix"
   ```
+
+# Clean Architecture
+
+- Desacoplamento: buscar não tornar o seu software muito acoplado/ depedente
+  de camadas externas, como a de infraestrutura;
+- Camadas:
+  - Azul, externa - Camada de Infraestrutura: onde o usuário tem o primeiro
+    contato com o sistema (UI, banco de dados);
+  - Verde - Interface Adapters: é a camada que adapta, formata os dados vindos
+    da camada mais externa (azul) para as camadas mais internas entenderem;
+    - Missão de proteger as camadas de use cases e de entidades da implementação
+      direta da camada azul/infraestrutura;
+      - SOLID - Inversão de dependência: evitar que os casos de uso dependam da
+        camada de infraestrutura, mas sim de um contrato/assinatura que qualquer
+        outra ferramenta/lib possa se adaptar para servir a aplicação;
+    - As camadas não devem precisar saber de detalhes de outras camadas, permi-
+      tindo desacoplar da camada de infraestrutra e ser implantado em outro pro-
+      jeto; isso especialmente no use cases;
+    - As camadas internas NÃO podem importar coisas das camadas mais externas (
+      ex: uma Entidade/classe não pode importar coisas de um use case, mas o con-
+      trário pode acontecer)
