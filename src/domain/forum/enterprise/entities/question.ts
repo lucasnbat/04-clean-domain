@@ -36,7 +36,7 @@ export class Question extends Entity<QuestionProps> {
   }
 
   get createdAt() {
-    return this.props.updatedAt
+    return this.props.createdAt
   }
 
   get updatedAt() {
@@ -90,7 +90,7 @@ export class Question extends Entity<QuestionProps> {
       {
         ...props,
         slug: props.slug ?? Slug.createFromText(props.title), // sistema gera autpmático
-        createdAt: new Date(), // sistema gera autpmático
+        createdAt: props.createdAt ?? new Date(), // sistema gera autpmático
       },
       id,
     )
