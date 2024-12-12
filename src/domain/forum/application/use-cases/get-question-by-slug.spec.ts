@@ -7,7 +7,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 let inMemoryQuestionsRepositoryInstance: InMemoryQuestionsRepository
 let sut: GetQuestionBySlugUseCase
 
-describe('Get QUestion By Slug', () => {
+describe('Get Question By Slug', () => {
   beforeEach(() => {
     // inicializa o repositório fake que simula a infra/maquinaria
     inMemoryQuestionsRepositoryInstance = new InMemoryQuestionsRepository()
