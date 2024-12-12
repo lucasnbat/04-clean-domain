@@ -180,3 +180,9 @@
   como dependências deles;
   - Eles são tipados com classes de Request e Response
   - E possuem como função principal a `execute()`
+- **O que você está fazendo é:**
+  - Abordagem para problema: DDD;
+  - Arquitetura: Clean Architecture -> desacoplamento (camada externas apenas
+    dependendo das mais internas, não o contrário);
+  - SOLID (inversão de dependência) -> repositórios;
+  - Design Patterns -> factories;
