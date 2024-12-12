@@ -6,4 +6,6 @@ export interface QuestionsRepository {
   // feito inicialmente para achar pergunta antes de deletar
   findById(id: string): Promise<Question | null>
   delete(question: Question): Promise<void>
+  // save: para salvar question dentro de caso de uso de edição
+  save(question: Question): Promise<void>
 }
