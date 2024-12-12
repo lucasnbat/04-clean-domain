@@ -186,3 +186,8 @@
     dependendo das mais internas, não o contrário);
   - SOLID (inversão de dependência) -> repositórios;
   - Design Patterns -> factories;
+
+## Gerando dados "fake"
+
+- `npm install @faker-js/faker -D`
+- 

@@ -4,6 +4,7 @@ import { Question } from '../../enterprise/entities/question'
 import { Slug } from '../../enterprise/entities/value-objects/slug'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeQuestion } from 'test/factories/make-question'
+import { faker } from '@faker-js/faker'
 
 let inMemoryQuestionsRepositoryInstance: InMemoryQuestionsRepository
 let sut: GetQuestionBySlugUseCase
@@ -20,6 +21,9 @@ describe('Get Question By Slug', () => {
   it('should be able to get question by slug', async () => {
     // chamando factory que vai criar a pergunta
     const newQuestion = makeQuestion({
+      authorId: new UniqueEntityID(),
+      title: faker.lorem.sentence(),
+      content: faker.lorem.text(),
       slug: Slug.create('example-question'),
     })
 
