@@ -210,4 +210,12 @@
   - Left para caso dê errado, Right caso dê certo;
 - Fluxo normal se tudo dá certo sempre é para a direita:
   - UI -> CONTROLLER -> USE CASE -> ENTIDADE -> USE CASE -> REPOSITÓRIO -> BD
-- 
+
+## Erros genéricos
+
+- Mesmo esquema: pasta `erros/` em `use-cases/` contendo erros
+  específicos que extendem a classe `Error`, mas com o diferencial
+  de implementarem a interface `UseCaseError` presente em 
+  `core/errors/use-case-error.ts`
+  - É usada essa interface para diferenciar os erros que acontecem 
+    na camada de use cases dos outros;
