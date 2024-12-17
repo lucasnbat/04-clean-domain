@@ -1,11 +1,17 @@
+import { Either, left, right } from '@/core/either'
 import { AnswersRepository } from '../repositories/answers-repository'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 interface DeleteAnswerUseCaseRequest {
   answerId: string
   authorId: string
 }
 
-interface DeleteAnswerUseCaseResponse {}
+type DeleteAnswerUseCaseResponse = Either<
+  ResourceNotFoundError | NotAllowedError,
+  {}
+>
 
 // aqui precisa abrigar apenas a lógica que usa a maquinaria para fazer o que
 // a regra de negócio pede...para reproduzir o cenário do zero usamos testes
@@ -19,15 +25,15 @@ export class DeleteAnswerUseCase {
     const answerFinded = await this.answersRepository.findById(answerId)
 
     if (!answerFinded) {
-      throw new Error('Answer not found')
+      return left(new ResourceNotFoundError())
     }
 
     // se o autor da deleção não for o author da pergunnta, bloqueia
     if (authorId !== answerFinded.authorId.toString()) {
-      throw new Error('Not allowed')
+      return left(new NotAllowedError())
     }
     await this.answersRepository.delete(answerFinded)
 
-    return {}
+    return right({})
   }
 }
