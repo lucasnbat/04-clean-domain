@@ -190,4 +190,24 @@
 ## Gerando dados "fake"
 
 - `npm install @faker-js/faker -D`
+
+# Estratégias de Error Handlering
+
+- Mais tradicional: `throw new Error('mensagem')`
+  - `throw` coloca exceção na aplicação 
+  - logo, você PRECISA usar `trycatch` na chamada dessa função
+    que tem o `throw` para tratar esse erro e mandar de forma 
+    melhor para o front-end, se não você vai imprimir uma pilha
+    de erros horrível no front-end;
+  - instanciando apenas `Error` você não tem personalização para
+    tipos de erro diferente...
+
+## Functional error handlering
+
+- Usa funções para retornar sucesso ou falha;
+- Classe que vai tratar error handlering em `either.ts`
+- Convenção:
+  - Left para caso dê errado, Right caso dê certo;
+- Fluxo normal se tudo dá certo sempre é para a direita:
+  - UI -> CONTROLLER -> USE CASE -> ENTIDADE -> USE CASE -> REPOSITÓRIO -> BD
 - 
