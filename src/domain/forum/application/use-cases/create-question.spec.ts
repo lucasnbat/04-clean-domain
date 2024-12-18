@@ -23,13 +23,15 @@ describe('Create question', () => {
 
   it('should be able to create a question', async () => {
     // usa a função do caso de uso, agora carregado com o repo. fake
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       authorId: '1',
       title: 'Nova pergunta',
       content: 'Conteúdo da pergunta',
     })
 
-    expect(question.id).toBeTruthy()
-    expect(inMemoryQuestionsRepositoryInstance.items[0].id).toEqual(question.id)
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryQuestionsRepositoryInstance.items[0]).toEqual(
+      result.value?.question,
+    )
   })
 })

@@ -28,14 +28,21 @@ describe('Get Question By Slug', () => {
 
     inMemoryQuestionsRepositoryInstance.create(newQuestion)
     // usa a função do caso de uso, agora carregado com o repo. fake
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       slug: 'example-question',
     })
 
-    expect(question.id).toBeTruthy()
+    // verificação explícita para o tipo
+    if (result.isLeft()) {
+      throw new Error(
+        'Test failed: expected question, but got ResourceNotFoundError',
+      )
+    }
+
+    expect(result.value?.question.id).toBeTruthy()
 
     // verificar se a question retornada pela pesquisa via slug é a mesma
     // que foi criada por nós
-    expect(question.title).toEqual(newQuestion.title)
+    expect(result.value?.question.title).toEqual(newQuestion.title)
   })
 })
