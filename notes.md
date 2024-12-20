@@ -219,3 +219,33 @@
   `core/errors/use-case-error.ts`
   - É usada essa interface para diferenciar os erros que acontecem 
     na camada de use cases dos outros;
+
+# Aggregates & Watched Lists
+
+## Aggregates (agregado)
+
+- Pedido (Order) de e-commerce:
+  - Ele tem vários itens (OrderItem[])
+  - E não faz sentido gravar um item no banco antes do pedido ser gravado;
+- Geralmente as entidades agregado são entidades que são trabalhadas/manipuladas
+  ao mesmo tempo numa criação, edição, deleção ou leitura;
+    - Ao deletar um pedido, por ex., você deleta todos os itens relacionadaos a
+      ele;
+- Agregados podem fazer operações que entidades não agregadas não podem.
+
+## Watched Lists (lista observada)
+
+- Serve para casos onde você por ex., edita os anexos de uma pergunta (ex: 3 ane-
+  xos);
+  - Você pode:
+    -  Adicionar novo anexo;
+    -  Remover apenas o segundo anexo;
+    -  Editar o nome de um anexo específico;
+ -  Remover TODO o estado anterior e REINSERIR tudo seria muito custoso;
+ -  Logo é preciso:
+    -  Identificar os novos anexos pra fazer CREATE no banco;
+    -  Identificar quais foram removidos pra fazer DELETE no banco;
+    -  Identificar quais foram editados pra fazer UPDATE no banco;
+ -  Então o WatchedList é um array quase normal, a diferença é que cada posição
+    do array não tem apenas as informações de cada item, mas também a informação
+    sobre se o item é novo, editado, removido, etc.;
