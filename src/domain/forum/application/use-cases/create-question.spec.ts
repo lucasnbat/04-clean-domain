@@ -1,5 +1,6 @@
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { CreateQuestionUseCase } from './create-question'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 // isso é o repositório fake em memória tipado com a estrutura
 // do repositório em `test/repositories/in-memory-questions-repository
@@ -27,11 +28,20 @@ describe('Create question', () => {
       authorId: '1',
       title: 'Nova pergunta',
       content: 'Conteúdo da pergunta',
+      attachmentsIds: ['1', '2'],
     })
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryQuestionsRepositoryInstance.items[0]).toEqual(
       result.value?.question,
     )
+    expect(
+      inMemoryQuestionsRepositoryInstance.items[0].attachments,
+    ).toHaveLength(2)
+
+    expect(inMemoryQuestionsRepositoryInstance.items[0].attachments).toEqual([
+      expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
+      expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
+    ])
   })
 })

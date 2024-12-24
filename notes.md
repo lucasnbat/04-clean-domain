@@ -237,7 +237,6 @@
 
 - São as entidades principais do agregado, no caso de uma lógica de pedidos com
   itens, o agregate root é o pedido;
-- 
 
 ## Watched Lists (lista observada)
 
@@ -255,3 +254,21 @@
  -  Então o WatchedList é um array quase normal, a diferença é que cada posição
     do array não tem apenas as informações de cada item, mas também a informação
     sobre se o item é novo, editado, removido, etc.;
+
+# Forma moderna de fazer uploads (Aula 'Criando pergunta com anexos')
+
+- Fluxo comum:
+  - Formulário de cadastro -> seleciona arquivos -> faz upload e cria pergunta;
+- Fluxo moderno:
+  - Formulário -> seleciona arquivos -> já faz upload dos arquivos -> cria pergunta
+    - Ou seja, na hora da criação da pergunta você só recebe os IDs dos arquivos
+      que já foram salvos;
+    - Fazemos isso porque lidar com cadastros multipart é chato >w<
+    - O ideal é: uma rota só para upload, multipart form data; outra só usando JSON para cadastro com os ids dos arquivos;
+
+## Como lidar com salvamento de anexos? Crio um repositório só para isso?
+
+- Não precisa. Como a Question é a classe Agregate Root, ela se encarrega
+  de ter todos os métodos restantes para salvar as classes sub-agragete, como
+  anexos
+- Logo, os métodos C.R.U.D. de anexos estarão no repositório de Questions

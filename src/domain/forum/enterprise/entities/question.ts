@@ -3,6 +3,7 @@ import { Slug } from './value-objects/slug'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
+import { QuestionAttachment } from './question-attachment'
 
 export interface QuestionProps {
   authorId: UniqueEntityID
@@ -10,6 +11,7 @@ export interface QuestionProps {
   title: string
   content: string
   slug: Slug
+  attachments: QuestionAttachment[] // anexos da pergunta
   createdAt: Date
   updatedAt?: Date
 }
@@ -46,6 +48,10 @@ export class Question extends AgregateRoot<QuestionProps> {
 
   get slug() {
     return this.props.slug
+  }
+
+  get attachments() {
+    return this.props.attachments
   }
 
   get createdAt() {
@@ -86,6 +92,10 @@ export class Question extends AgregateRoot<QuestionProps> {
     this.touch()
   }
 
+  set attachments(attachments: QuestionAttachment[]) {
+    this.props.attachments = attachments
+  }
+
   set bestAnswerId(bestAnswerId: UniqueEntityID | undefined) {
     this.props.bestAnswerId = bestAnswerId
     this.touch()
@@ -96,14 +106,15 @@ export class Question extends AgregateRoot<QuestionProps> {
   // porque vamos fazer isso? para permitir preenchimento automático do createdAt()
   // usamos o Optional para que não seja preciso passar createdAt ao criar nova question
   static create(
-    props: Optional<QuestionProps, 'createdAt' | 'slug'>,
+    props: Optional<QuestionProps, 'createdAt' | 'slug' | 'attachments'>,
     id?: UniqueEntityID,
   ) {
     const question = new Question(
       {
         ...props,
-        slug: props.slug ?? Slug.createFromText(props.title), // sistema gera autpmático
         createdAt: props.createdAt ?? new Date(), // sistema gera autpmático
+        slug: props.slug ?? Slug.createFromText(props.title), // sistema gera autpmático
+        attachments: props.attachments ?? [],
       },
       id,
     )
