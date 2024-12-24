@@ -233,6 +233,12 @@
       ele;
 - Agregados podem fazer operações que entidades não agregadas não podem.
 
+### Agregate root
+
+- São as entidades principais do agregado, no caso de uma lógica de pedidos com
+  itens, o agregate root é o pedido;
+- 
+
 ## Watched Lists (lista observada)
 
 - Serve para casos onde você por ex., edita os anexos de uma pergunta (ex: 3 ane-

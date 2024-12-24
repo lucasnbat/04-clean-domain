@@ -5,7 +5,7 @@ import { UniqueEntityID } from './unique-entity-id'
 // sem o generic, com o any, ele não mostra as opções de tipo possiveis (ctrl + espaço)
 // dentro de cada classe, então, eu passo <AnswerProps> no lugar de <Props>, per-
 // mitindo eu ter a intelissense do typescript
-export class Entity<Props> {
+export abstract class Entity<Props> {
   // privado pois não deve ser acessível a mudanças feitas por outras classes
   private _id: UniqueEntityID
   // atributo generico para referenciar os atributos das classes

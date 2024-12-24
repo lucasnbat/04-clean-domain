@@ -1,5 +1,5 @@
+import { AgregateRoot } from '@/core/entities/agregate-root'
 import { Slug } from './value-objects/slug'
-import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
@@ -14,7 +14,20 @@ export interface QuestionProps {
   updatedAt?: Date
 }
 
-export class Question extends Entity<QuestionProps> {
+// Troquei "extends Entity" por "extends AgregateRoot"
+// isso porque question vai participar de um agregado
+// e outra: o Agregate Root extende a Entity, então a
+// substituição direta de um pelo outro não gera erros
+// nos testes. A question é um agregate root porque tudo
+// começa nela
+
+// como entidades Question, e tags e anexos são criados e
+// editados AO MESMO TEMPO, são agregado.
+
+// Question e answers não são agregados porque são criados
+// em momentos diferentes, nem sempre precisam ser ao mesmo
+// tempo
+export class Question extends AgregateRoot<QuestionProps> {
   get authorId() {
     return this.props.authorId
   }
