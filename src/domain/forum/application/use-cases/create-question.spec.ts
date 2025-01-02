@@ -36,10 +36,12 @@ describe('Create question', () => {
       result.value?.question,
     )
     expect(
-      inMemoryQuestionsRepositoryInstance.items[0].attachments,
+      inMemoryQuestionsRepositoryInstance.items[0].attachments.currentItems,
     ).toHaveLength(2)
 
-    expect(inMemoryQuestionsRepositoryInstance.items[0].attachments).toEqual([
+    expect(
+      inMemoryQuestionsRepositoryInstance.items[0].attachments.currentItems,
+    ).toEqual([
       expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
       expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
     ])

@@ -9,6 +9,7 @@ interface EditQuestionUseCaseRequest {
   authorId: string
   title: string
   content: string
+  attachmentsIds: string[]
 }
 
 type EditQuestionUseCaseResponse = Either<
@@ -26,7 +27,10 @@ export class EditQuestionUseCase {
     content,
     title,
     authorId,
+    attachmentsIds,
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
+    // findById deve retornar as info. das questões sem os anexos...
+    // seria uso de processamento desnecessariamente
     const question = await this.questionsRepository.findById(questionId)
 
     if (!question) {

@@ -272,3 +272,8 @@
   de ter todos os métodos restantes para salvar as classes sub-agragete, como
   anexos
 - Logo, os métodos C.R.U.D. de anexos estarão no repositório de Questions
+
+# Nota importante:
+
+- Suspeito que a pasta `domain/forum/application/repositories/enterprise` não
+  deveria existir, apenas a `domain/forum/enterprise/` bastaria

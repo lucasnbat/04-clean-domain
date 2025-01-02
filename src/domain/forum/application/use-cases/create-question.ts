@@ -3,6 +3,7 @@ import { Question } from '../../enterprise/entities/question'
 import { QuestionsRepository } from '../repositories/questions-repository'
 import { Either, right } from '@/core/either'
 import { QuestionAttachment } from '../../enterprise/entities/question-attachment'
+import { QuestionAttachmentList } from '../../enterprise/entities/question-attachment-list'
 
 interface CreateQuestionUseCaseRequest {
   authorId: string
@@ -43,7 +44,7 @@ export class CreateQuestionUseCase {
     })
 
     // aqui estou usando o set attachments da classe para inserir os anexos
-    question.attachments = questionAttachments
+    question.attachments = new QuestionAttachmentList(questionAttachments)
 
     // passa para a parte de infra que vai salvar (prisma, TypeOrm...)
     await this.questionsRepository.create(question)
