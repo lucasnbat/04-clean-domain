@@ -3,14 +3,23 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeQuestion } from 'test/factories/make-question'
 import { DeleteQuestionUseCase } from './delete-question'
 import { NotAllowedError } from './errors/not-allowed-error'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
+import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
 
 let inMemoryQuestionsRepositoryInstance: InMemoryQuestionsRepository
+let inMemoryQuestionAttachmentsRepositoryInstance: InMemoryQuestionAttachmentsRepository
 let sut: DeleteQuestionUseCase
 
 describe('Get Question By Slug', () => {
   beforeEach(() => {
     // inicializa o repositório fake que simula a infra/maquinaria
-    inMemoryQuestionsRepositoryInstance = new InMemoryQuestionsRepository()
+
+    inMemoryQuestionAttachmentsRepositoryInstance =
+      new InMemoryQuestionAttachmentsRepository()
+
+    inMemoryQuestionsRepositoryInstance = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepositoryInstance,
+    )
 
     // inicializa o caso de uso e arma ele com o repositório recém carregado
     sut = new DeleteQuestionUseCase(inMemoryQuestionsRepositoryInstance)
@@ -26,12 +35,25 @@ describe('Get Question By Slug', () => {
     )
 
     inMemoryQuestionsRepositoryInstance.create(newQuestion)
+
+    inMemoryQuestionAttachmentsRepositoryInstance.items.push(
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID('1'),
+      }),
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID('2'),
+      }),
+    )
+
     await sut.execute({
       questionId: 'question-1',
       authorId: 'author-1',
     })
 
     expect(inMemoryQuestionsRepositoryInstance.items).toHaveLength(0)
+    expect(inMemoryQuestionAttachmentsRepositoryInstance.items).toHaveLength(0)
   })
 
   it('should not be able to delete a question from another user', async () => {
