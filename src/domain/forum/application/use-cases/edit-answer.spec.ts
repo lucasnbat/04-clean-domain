@@ -8,6 +8,7 @@ import { makeAnswerAttachment } from 'test/factories/make-answer-attachment'
 
 let inMemoryAnswersRepositoryInstance: InMemoryAnswersRepository
 let inMemoryAnswerAttachmentsRepositoryInstance: InMemoryAnswerAttachmentsRepository
+
 let sut: EditAnswerUseCase
 
 describe('Edit Answer', () => {
@@ -16,7 +17,9 @@ describe('Edit Answer', () => {
       new InMemoryAnswerAttachmentsRepository()
 
     // inicializa o repositório fake que simula a infra/maquinaria
-    inMemoryAnswersRepositoryInstance = new InMemoryAnswersRepository()
+    inMemoryAnswersRepositoryInstance = new InMemoryAnswersRepository(
+      inMemoryAnswerAttachmentsRepositoryInstance,
+    )
 
     // inicializa o caso de uso e arma ele com o repositório recém carregado
     sut = new EditAnswerUseCase(

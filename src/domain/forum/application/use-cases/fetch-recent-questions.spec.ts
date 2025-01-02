@@ -3,13 +3,20 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeQuestion } from 'test/factories/make-question'
 import { faker } from '@faker-js/faker'
 import { FetchRecentQuestionsUseCase } from './fetch-recent-questions'
+import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachment-repository'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 
 let inMemoryQuestionsRepositoryInstance: InMemoryQuestionsRepository
+let inMemoryQuestionAttachmentsRepositoryInstance: InMemoryQuestionAttachmentsRepository
 let sut: FetchRecentQuestionsUseCase
 
 describe('Fetch Recent Questions', () => {
   beforeEach(() => {
-    inMemoryQuestionsRepositoryInstance = new InMemoryQuestionsRepository()
+    inMemoryQuestionAttachmentsRepositoryInstance =
+      new InMemoryQuestionAttachmentsRepository()
+    inMemoryQuestionsRepositoryInstance = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepositoryInstance,
+    )
 
     sut = new FetchRecentQuestionsUseCase(inMemoryQuestionsRepositoryInstance)
   })
