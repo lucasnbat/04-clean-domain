@@ -136,6 +136,7 @@ export abstract class WatchedList<T> {
     // negação: agora inverte e pega todos os itens que EXISTEM em items mas
     // AINDA NÃO EXISTEM em currentItems. São esses que AINDA NÃO EXISTEM que
     // queremos adicionar, ou seja, que serão os newItems
+    // currentItems: [1,2] items: [1,3,4]; array retorno: [3,4]
     const newItems = items.filter((a) => {
       return !this.getItems().some((b) => this.compareItems(a, b))
     })
@@ -144,6 +145,7 @@ export abstract class WatchedList<T> {
     // currentItems. Aqui, pegamos a currentItems e verificamos, para cada item
     // dela, se ele já está presente na lista items. Então, pegamos apenas os que
     // estão em currentItems e não estão em items, ou seja, os que serão eliminados.
+    // currentItems: [1,2] items: [1,3,4]; array retorno: [2]
     const removedItems = this.getItems().filter((a) => {
       return !items.some((b) => this.compareItems(a, b))
     })
