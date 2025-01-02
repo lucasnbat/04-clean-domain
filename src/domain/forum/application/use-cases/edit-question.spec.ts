@@ -3,17 +3,25 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { makeQuestion } from 'test/factories/make-question'
 import { EditQuestionUseCase } from './edit-question'
 import { NotAllowedError } from './errors/not-allowed-error'
+import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
+import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
 
 let inMemoryQuestionsRepositoryInstance: InMemoryQuestionsRepository
+let inMemmoryQuestionAttachmentsRepositoryInstance: InMemoryQuestionAttachmentsRepository
 let sut: EditQuestionUseCase
 
 describe('Get Question By Slug', () => {
   beforeEach(() => {
     // inicializa o repositório fake que simula a infra/maquinaria
     inMemoryQuestionsRepositoryInstance = new InMemoryQuestionsRepository()
+    inMemmoryQuestionAttachmentsRepositoryInstance =
+      new InMemoryQuestionAttachmentsRepository()
 
     // inicializa o caso de uso e arma ele com o repositório recém carregado
-    sut = new EditQuestionUseCase(inMemoryQuestionsRepositoryInstance)
+    sut = new EditQuestionUseCase(
+      inMemoryQuestionsRepositoryInstance,
+      inMemmoryQuestionAttachmentsRepositoryInstance,
+    )
   })
 
   it('should be able to edit a question', async () => {
@@ -26,17 +34,47 @@ describe('Get Question By Slug', () => {
     )
 
     inMemoryQuestionsRepositoryInstance.create(newQuestion)
+
+    // criei com anexos [1,2]
+    inMemmoryQuestionAttachmentsRepositoryInstance.items.push(
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID('1'),
+      }),
+      makeQuestionAttachment({
+        questionId: newQuestion.id,
+        attachmentId: new UniqueEntityID('2'),
+      }),
+    )
+
+    // agora vou editar para ser anexos [1,3], ou seja, removi o
+    // 2 e adicionei o 3
     await sut.execute({
       authorId: 'author-1',
       title: 'editei-titulo',
       content: 'editei-conteudo',
       questionId: newQuestion.id.toValue(),
+      attachmentsIds: ['1', '3'],
     })
 
     expect(inMemoryQuestionsRepositoryInstance.items[0]).toMatchObject({
       title: 'editei-titulo',
       content: 'editei-conteudo',
     })
+
+    // tem que ter 2 anexos (1 e 3)
+    expect(
+      inMemoryQuestionsRepositoryInstance.items[0].attachments.currentItems,
+    ).toHaveLength(2)
+
+    // o retorno de currentItems precisa ser um vetor contendo os attachmentsIds
+    // 1 e 3
+    expect(
+      inMemoryQuestionsRepositoryInstance.items[0].attachments.currentItems,
+    ).toEqual([
+      expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
+      expect.objectContaining({ attachmentId: new UniqueEntityID('3') }),
+    ])
   })
 
   it('should not be able to edit a question from another user', async () => {
@@ -55,6 +93,7 @@ describe('Get Question By Slug', () => {
       title: 'editei-titulo',
       content: 'editei-conteudo',
       questionId: newQuestion.id.toValue(),
+      attachmentsIds: [],
     })
 
     expect(result.isLeft()).toBe(true)
