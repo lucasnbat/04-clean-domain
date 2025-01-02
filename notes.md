@@ -277,3 +277,6 @@
 
 - Suspeito que a pasta `domain/forum/application/repositories/enterprise` não
   deveria existir, apenas a `domain/forum/enterprise/` bastaria
+- No final do capítulo 4 do módulo, Diego alterou alguns testes como o do fetch
+  recent questions, pois os dele não tavam passando. Se tiver problemas relacionados
+  a isso no futuro, verifique essa parte e partes semelhantes que foram modificadas.
