@@ -62,6 +62,7 @@ export class EditAnswerUseCase {
 
     answerAttachmentList.update(answerAttachments)
 
+    answer.attachments = answerAttachmentList
     // só altera campos que tem set() na classe Answer
     answer.content = content
 

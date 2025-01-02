@@ -7,20 +7,24 @@ import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memo
 import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
 
 let inMemoryQuestionsRepositoryInstance: InMemoryQuestionsRepository
-let inMemmoryQuestionAttachmentsRepositoryInstance: InMemoryQuestionAttachmentsRepository
+let inMemoryQuestionAttachmentsRepositoryInstance: InMemoryQuestionAttachmentsRepository
 let sut: EditQuestionUseCase
 
 describe('Get Question By Slug', () => {
   beforeEach(() => {
+    inMemoryQuestionAttachmentsRepositoryInstance =
+      new InMemoryQuestionAttachmentsRepository()
     // inicializa o repositório fake que simula a infra/maquinaria
-    inMemoryQuestionsRepositoryInstance = new InMemoryQuestionsRepository()
-    inMemmoryQuestionAttachmentsRepositoryInstance =
+    inMemoryQuestionsRepositoryInstance = new InMemoryQuestionsRepository(
+      inMemoryQuestionAttachmentsRepositoryInstance,
+    )
+    inMemoryQuestionAttachmentsRepositoryInstance =
       new InMemoryQuestionAttachmentsRepository()
 
     // inicializa o caso de uso e arma ele com o repositório recém carregado
     sut = new EditQuestionUseCase(
       inMemoryQuestionsRepositoryInstance,
-      inMemmoryQuestionAttachmentsRepositoryInstance,
+      inMemoryQuestionAttachmentsRepositoryInstance,
     )
   })
 
@@ -36,7 +40,7 @@ describe('Get Question By Slug', () => {
     inMemoryQuestionsRepositoryInstance.create(newQuestion)
 
     // criei com anexos [1,2]
-    inMemmoryQuestionAttachmentsRepositoryInstance.items.push(
+    inMemoryQuestionAttachmentsRepositoryInstance.items.push(
       makeQuestionAttachment({
         questionId: newQuestion.id,
         attachmentId: new UniqueEntityID('1'),
