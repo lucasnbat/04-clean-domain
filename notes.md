@@ -280,3 +280,25 @@
 - No final do capítulo 4 do módulo, Diego alterou alguns testes como o do fetch
   recent questions, pois os dele não tavam passando. Se tiver problemas relacionados
   a isso no futuro, verifique essa parte e partes semelhantes que foram modificadas.
+
+# Subdomínios no DDD
+
+## Tipos de subdomínios
+
+- Tipos principais são:
+  - core: 
+    - O que rende dinheiro (parte de compra, catálogo, pagamento, entrega), tudo
+      que se parar o emprego tá em risco;
+    - dificilmente terceirizável;
+  - supporting:
+    - Dá suporte para que os core domains continuem funcionando (estoque, por ex);
+  - generic:
+    - você precisa mas não são essencialmente importantes, tais como notificação
+      ao cliente ou promoções, ou chat;
+    - são partes muito terceirizáveis (que pode delegar para outras soluções)
+- Dividir em subdomínios facilita o planejamento e criação de microserviços;
+- É preciso que os subdomínios sejam independentes, ou seja, ao haver uma compra 
+  fechada no subdominio de compra, não pode haver chamada direta à uma função do
+  subdomínio de faturamento para emissão de NF por exemplo;
+    - O objetivo é que você possa fazer cada subdominio funcionar separadamente
+      usando apenas estruturas de comunicação, e não chamadas diretas;
