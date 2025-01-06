@@ -1,5 +1,4 @@
 import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { SendNotificationUseCase } from './send-notification'
 
 // isso é o repositório fake em memória tipado com a estrutura

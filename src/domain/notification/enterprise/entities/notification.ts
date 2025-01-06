@@ -31,6 +31,14 @@ export class Notification extends Entity<NotificationProps> {
     return this.props.readAt
   }
 
+  // accessor: você pode acessar a prop e alterar, mas não tem acesso
+  // direto à prop que nem o setter, porque você nunca vai selecionar
+  // um horário diferente do que o usuário leu a msg. O accessor meio
+  // que só tem um valor padrão, que no caso é o horario de leitura
+  read() {
+    this.props.readAt = new Date()
+  }
+
   static create(
     props: Optional<NotificationProps, 'createdAt'>,
     id?: UniqueEntityID,
