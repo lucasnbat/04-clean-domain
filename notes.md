@@ -302,3 +302,26 @@
   subdomínio de faturamento para emissão de NF por exemplo;
     - O objetivo é que você possa fazer cada subdominio funcionar separadamente
       usando apenas estruturas de comunicação, e não chamadas diretas;
+
+# Fluxos de eventos do domínio
+
+- Você deve evitar acoplamento: situação onde ao gerar nova resposta,
+  haja o envio de uma notificação, por exemplo;
+  - Se o serviço de notificação for terceirizado, vai dar erro no caso de uso
+    de nova resposta;
+  - Se mais para frente houverem novos casos de uso que criem respostas de forma
+    diferente, aí a notificação nao vai ser enviada porque ela está acoplada ao
+    caso de uso de nova resposta mais primitivo;
+- Solução: Publish/Subscribe
+  - Você faz com que um método de uma classe (ex: Answer) como o método `create()`
+    cadastre um evento dentro de uma estrutura de dados como um array de objetos
+    onde cada objeto contém chaves que descrevem, em seus valores, o tipo de e-
+    vento (ex: 'create-answer'), a classe do evento, etc;
+      - Na estrutura de dados fica gravado uma flag para dizer se está pronto
+        para ser consumido (`ready -> true ou false`)
+      - Após o salvamento no banco de dados que você vai disparar uma troca de 
+        false para true e assim acionar o Subscriber para enviar a notificação;
+  - Paralelamente vai haver uma classe chamada **Subscriber** que vai ficar escu-
+    tando os eventos e, em caso de haver um novo evento de um tipo que ele precisa
+    ouvir para enviar notificação, ele aciona o caso de uso de envio de notifi-
+    cação;
