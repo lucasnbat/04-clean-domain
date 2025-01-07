@@ -14,9 +14,11 @@ export class DomainEvents {
   private static handlersMap: Record<string, DomainEventCallback[]> = {}
 
   // marca quais agregados da aplicação tem eventos pendentes (ex: answers
-  // que ainda já salvas no BD e que estão com ready = true )
+  // que já estão salvas no BD e que estão com ready = true, mas ainda não
+  // foram disparados )
   private static markedAggregates: AgregateRoot<any>[] = []
 
+  // serve para marcar o agregado dentro do array acima (markedAgreggates)
   public static markAggregateForDispatch(aggregate: AgregateRoot<any>) {
     // se não achou o agregado com id passado na lista, agreggateFound = false
     const aggregateFound = !!this.findMarkedAggregateByID(aggregate.id)
@@ -29,7 +31,11 @@ export class DomainEvents {
 
   // método que será chamado pelo banco de dados para fazer o ready ficar
   // true e fazer o subscriber disparar o evento de notificação, por ex
+  // é o método que dispara o evento em si
   private static dispatchAggregateEvents(aggregate: AgregateRoot<any>) {
+    // veja que ele vai pegar a minha resposta, o meu agregado, ir dentro
+    // dos eventos que ele pré disparou com addDomainEvent() e disparar um
+    // a um
     aggregate.domainEvents.forEach((event: DomainEvent) => this.dispatch(event))
   }
 
@@ -48,14 +54,20 @@ export class DomainEvents {
     return this.markedAggregates.find((aggregate) => aggregate.id.equals(id))
   }
 
+  // aqui parece uma superfunção que recebe agregados e dispara todos os eventos
+  // de cada um.
   public static dispatchEventsForAggregate(id: UniqueEntityID) {
     const aggregate = this.findMarkedAggregateByID(id)
 
     if (aggregate) {
+      // pega agregado e dispara todos os eventos pre disparados dele
       this.dispatchAggregateEvents(aggregate)
 
+      // limpa a lista de eventos do agregado
       aggregate.clearEvents()
 
+      // remove o agregado da lista de agregados que tem eventos pendentes
+      // de disparo
       this.removeAggregateFromMarkedDispatchList(aggregate)
     }
   }

@@ -25,4 +25,10 @@ export class UniqueEntityID {
   constructor(value?: string) {
     this.value = value ?? randomUUID()
   }
+
+  // valida se o id recebido na função é o mesmo id da classe atual
+  // (this)
+  equals(id: UniqueEntityID) {
+    return id.toValue() === this.value
+  }
 }

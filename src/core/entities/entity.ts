@@ -24,4 +24,15 @@ export abstract class Entity<Props> {
     // um id automático (hoje, por meio do randomUUID())
     this._id = id ?? new UniqueEntityID()
   }
+
+  // retorna se a entidade recebida na função é a entidade atual
+  public equals(entity: Entity<any>) {
+    if (entity === this) {
+      return true
+    }
+
+    if (entity.id === this._id) {
+      return true
+    }
+  }
 }
