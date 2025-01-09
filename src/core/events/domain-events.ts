@@ -16,6 +16,7 @@ export class DomainEvents {
   // marca quais agregados da aplicação tem eventos pendentes (ex: answers
   // que já estão salvas no BD e que estão com ready = true, mas ainda não
   // foram disparados )
+  // deveria se chamar markedAggregatesForDespatch
   private static markedAggregates: AgregateRoot<any>[] = []
 
   // serve para marcar o agregado dentro do array acima (markedAgreggates)
@@ -31,7 +32,8 @@ export class DomainEvents {
 
   // método que será chamado pelo banco de dados para fazer o ready ficar
   // true e fazer o subscriber disparar o evento de notificação, por ex
-  // é o método que dispara o evento em si
+  // É o método que dispara os eventos de um agregado marcado na lista de
+  // markedAggregates
   private static dispatchAggregateEvents(aggregate: AgregateRoot<any>) {
     // veja que ele vai pegar a minha resposta, o meu agregado, ir dentro
     // dos eventos que ele pré disparou com addDomainEvent() e disparar um
@@ -95,13 +97,24 @@ export class DomainEvents {
   }
 
   private static dispatch(event: DomainEvent) {
+    // pega o nome da classe do evento: por exemplo, CustomAggreagateCreated
     const eventClassName: string = event.constructor.name
 
+    // busca em handlersMap se o nome do evento está associado
+    // com alguma função callback, se sim, retorna true
     const isEventRegistered = eventClassName in this.handlersMap
 
+    // se eu tiver isso:
+    // handlersMap = {
+    //   "UserHasCreated": [callback1, callback2],
+    // };
     if (isEventRegistered) {
+      // essa linha abaixo vai retornar:
+      // [callback1, callback2]
       const handlers = this.handlersMap[eventClassName]
 
+      // loop no vetor pegando cada função callback e acionando
+      // passando o evento
       for (const handler of handlers) {
         handler(event)
       }
