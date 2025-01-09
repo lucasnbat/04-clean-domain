@@ -11,6 +11,9 @@ export class DomainEvents {
   // É um vetor de funções do tipo DomainEventCallback porque posso ter vários
   // subscribers com várias funções que podem ser chamadas dependendo do
   // evento (tipo string) que é detectado
+  // O handlersMap é o Subscriper...ele que fica ouvindo os eventos e, a
+  // depender do nome da classe do evento que tem (uma string) ele dispara
+  // uma função diferente (do tipo DomainEventCallBack)
   private static handlersMap: Record<string, DomainEventCallback[]> = {}
 
   // marca quais agregados da aplicação tem eventos pendentes (ex: answers
@@ -58,11 +61,15 @@ export class DomainEvents {
 
   // aqui parece uma superfunção que recebe agregados e dispara todos os eventos
   // de cada um.
+  // Leia-se "dispare eventos de cada agregado da markedAggregates"
   public static dispatchEventsForAggregate(id: UniqueEntityID) {
     const aggregate = this.findMarkedAggregateByID(id)
 
     if (aggregate) {
       // pega agregado e dispara todos os eventos pre disparados dele
+      // ou seja, ele vai no vetor _domainEvents do agregado, usa o nome
+      // das classes armazenadas lá para buscar se tem algum evento desse
+      // nome cadastrado no handlersMap e depois dispara
       this.dispatchAggregateEvents(aggregate)
 
       // limpa a lista de eventos do agregado
@@ -74,17 +81,25 @@ export class DomainEvents {
     }
   }
 
+  // o register registra um subscriber dentro do handlersMap
+  //
   public static register(
-    callback: DomainEventCallback,
+    callback: DomainEventCallback, // a função callback
 
-    eventClassName: string,
+    eventClassName: string, // o nome da classe
   ) {
+    // verifica se a classe do evento já está na lista handlersMap
     const wasEventRegisteredBefore = eventClassName in this.handlersMap
 
+    // se false, !false vai dar true e vai adicionar ele na lista
     if (!wasEventRegisteredBefore) {
+      // aparentemente inicializa uma chave com o nome do evento
       this.handlersMap[eventClassName] = []
     }
 
+    // e adiciona o callback para aquele evento
+    // ou seja, para o evento UserCreated eu posso ter uma função
+    // sendNotification()
     this.handlersMap[eventClassName].push(callback)
   }
 
