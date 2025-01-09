@@ -1,7 +1,8 @@
-import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 import { AnswerAttachmentList } from './answer-attachment-list'
+import { AgregateRoot } from '@/core/entities/agregate-root'
+import { AnswerCreatedEvent } from '../events/answer-created-event'
 
 export interface AnswerProps {
   content: string
@@ -24,7 +25,7 @@ export interface AnswerProps {
 // O construtor então cria um objeto com essas props e um id (que se não for in-
 // formado pelo usuário, vai ser criado pela randomUUID())
 // Se eu estou definindo
-export class Answer extends Entity<AnswerProps> {
+export class Answer extends AgregateRoot<AnswerProps> {
   get authorId() {
     return this.props.authorId
   }
@@ -80,6 +81,20 @@ export class Answer extends Entity<AnswerProps> {
       },
       id,
     )
+
+    // é uma nova resposta?
+    // se id existe (true), significa que já existe
+    // se id não existe (false), é nova
+    const isNewAnswer = !id
+
+    // !false = true, vai executar o bloco
+    if (!isNewAnswer) {
+      // logo, vai registrar o evento (ainda não disparado) passando
+      // a answer criada pelo método static dentro da instancia do
+      // evento
+      answer.addDomainEvent(new AnswerCreatedEvent(answer))
+    }
+
     return answer
   }
 }
