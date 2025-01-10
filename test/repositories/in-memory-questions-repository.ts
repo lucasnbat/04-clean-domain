@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { QuestionAttachmentsRepository } from '@/domain/forum/application/repositories/question-attachments-repository'
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
@@ -28,6 +29,8 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
   // essa função simula um prisma.question.create({}) por ex
   async create(question: Question) {
     this.items.push(question)
+
+    DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   async findById(id: string) {
@@ -57,6 +60,8 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
     // e substitui pelos dados recebidos
     this.items[itemIndex] = question
+
+    DomainEvents.dispatchEventsForAggregate(question.id)
   }
 
   // retorna questions ordenadas com base no createdAt (mais recentes primeiro)
