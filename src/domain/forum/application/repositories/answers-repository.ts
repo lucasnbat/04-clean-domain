@@ -1,5 +1,5 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
-import { Answer } from '../../enterprise/entities/answer'
+import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 export interface AnswersRepository {
   // recebe o objeto answer para gravar no banco

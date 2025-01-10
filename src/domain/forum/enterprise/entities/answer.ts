@@ -85,10 +85,11 @@ export class Answer extends AgregateRoot<AnswerProps> {
     // é uma nova resposta?
     // se id existe (true), significa que já existe
     // se id não existe (false), é nova
+    // logo, !false (quando é nova resposta) = true
     const isNewAnswer = !id
 
-    // !false = true, vai executar o bloco
-    if (!isNewAnswer) {
+    // true, vai executar o bloco
+    if (isNewAnswer) {
       // logo, vai registrar o evento (ainda não disparado) passando
       // a answer criada pelo método static dentro da instancia do
       // evento
