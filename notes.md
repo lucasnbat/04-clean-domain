@@ -16,6 +16,7 @@
   jeto;
 - Clean Architecture é só uma forma de arquitetura técnica para a aplicação, tal
   como MVC, etc...
+- ![alt text](images/image.png)
 
 ## Entidades e casos de uso
 
